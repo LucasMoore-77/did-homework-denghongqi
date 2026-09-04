@@ -1,0 +1,1 @@
+{"data":"data/raw/digital_transformation_firm_panel.csv","id":"firm_id","time":"year","outcome":"log_tfp","treatment":"digital","controls":["capital_intensity","export_share","soe"],"seed":825200520,"repetitions":300}
