@@ -4,6 +4,6 @@ warning: accessing absolute path `/System/Library/Fonts/STHeiti Light.ttc`; buil
 warning: accessing absolute path `/System/Library/Fonts/STHeiti Medium.ttc`; build may not be reproducible in other environments
 note: Rerunning TeX because "main.aux" changed ...
 note: Running xdvipdfmx ...
-note: Writing `825200520邓鸿琪/did-homework/paper/main.pdf` (232.76 KiB)
-note: Writing `825200520邓鸿琪/did-homework/paper/main.log` (21.21 KiB)
+note: Writing `paper/main.log` (21.21 KiB)
+note: Writing `paper/main.pdf` (229.70 KiB)
 note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
