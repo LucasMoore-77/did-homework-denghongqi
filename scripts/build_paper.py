@@ -1,4 +1,7 @@
-\documentclass[UTF8,11pt,fontset=none]{ctexart}
+from pathlib import Path
+import pandas as pd
+r=Path(__file__).resolve().parents[1];a=pd.read_csv(r/'output/all_results.csv')
+intro=r'''\documentclass[UTF8,11pt,fontset=none]{ctexart}
 \usepackage[a4paper,margin=2.4cm]{geometry}
 \setCJKmainfont{Songti SC}
 \setCJKsansfont{Heiti SC}
@@ -82,40 +85,18 @@ T4加入行业年固定效应及进一步的地区年固定效应后，系数为
 \small
 \begin{longtable}{llrrrr}
 \toprule 项目 & 设定 & b & SE & p & N\\\midrule\endhead
-基准 & 企业聚类 & 0.12092 & 0.00472 & $<0.001$ & 3240\\
-R3 & 对数劳动生产率 & 0.12053 & 0.00526 & $<0.001$ & 3240\\
-R4 & 无控制 & 0.12091 & 0.00472 & $<0.001$ & 3240\\
-R4 & 完整控制 & 0.12092 & 0.00472 & $<0.001$ & 3240\\
-R4 & 加入规模 & 0.12082 & 0.00481 & $<0.001$ & 3240\\
-R5 & 行业聚类 & 0.12092 & 0.00190 & $<0.001$ & 3240\\
-R5 & 地区聚类 & 0.12092 & 0.00325 & $<0.001$ & 3240\\
-R5 & 企业+年份聚类 & 0.12092 & 0.02630 & $0.0018$ & 3240\\
-R6 & 结果缩尾 & 0.11699 & 0.00523 & $<0.001$ & 3240\\
-R7 & 剔除电子 & 0.12038 & 0.00562 & $<0.001$ & 2376\\
-R7 & 剔除规模两端 & 0.12095 & 0.00501 & $<0.001$ & 2916\\
-R7 & 短窗口 & 0.08147 & 0.00642 & $<0.001$ & 1800\\
-T1 & 能力强度代理 & 0.17088 & 0.00743 & $<0.001$ & 3240\\
-T2 & 纺织 & 0.12492 & 0.00981 & $<0.001$ & 738\\
-T2 & 电子 & 0.12354 & 0.00871 & $<0.001$ & 864\\
-T2 & 电子减纺织 & -0.00138 & 0.01309 & $0.9164$ & 1602\\
-T2 & 非SOE & 0.12243 & 0.00532 & $<0.001$ & 2655\\
-T2 & SOE & 0.11373 & 0.01025 & $<0.001$ & 585\\
-T2 & SOE减非SOE & -0.00870 & 0.01145 & $0.4475$ & 3240\\
-T2 & 小规模 & 0.12271 & 0.00714 & $<0.001$ & 1620\\
-T2 & 大规模 & 0.12015 & 0.00649 & $<0.001$ & 1620\\
-T2 & 大减小 & -0.00255 & 0.00963 & $0.7910$ & 3240\\
-T3 & 能力交互 & 0.00253 & 0.00404 & $0.5324$ & 3240\\
-T3 & 平均能力处处理 & 0.11949 & 0.00527 & $<0.001$ & 3240\\
-T4 & 行业年FE & 0.12061 & 0.00471 & $<0.001$ & 3240\\
-T4 & 行业年+地区年FE & 0.12091 & 0.00469 & $<0.001$ & 3240\\
-T5 & 剔除化工 & 0.12111 & 0.00531 & $<0.001$ & 2646\\
-T5 & 剔除电子 & 0.12038 & 0.00562 & $<0.001$ & 2376\\
-T5 & 剔除机械 & 0.12256 & 0.00547 & $<0.001$ & 2196\\
-T5 & 剔除纺织 & 0.11977 & 0.00540 & $<0.001$ & 2502\\
-\bottomrule\end{longtable}\normalsize
+'''
+labels={'firm_cluster':'企业聚类','log_labor_productivity':'对数劳动生产率','no_controls':'无控制','full_controls_absorbed':'完整控制','add_firm_size':'加入规模','industry':'行业聚类','province':'地区聚类','firm_id+year':'企业+年份聚类','winsor_1_99':'结果缩尾','drop_electronics':'剔除电子','trim_size_firms_5_95':'剔除规模两端','window_2018_2022':'短窗口','minmax_capability_proxy':'能力强度代理','industry_group0':'纺织','industry_group1':'电子','industry_difference':'电子减纺织','ownership_group0':'非SOE','ownership_group1':'SOE','ownership_difference':'SOE减非SOE','size_group0':'小规模','size_group1':'大规模','size_difference':'大减小','capability_interaction':'能力交互','digital_at_mean_capability':'平均能力处处理','industry_year':'行业年FE','industry_province_year':'行业年+地区年FE','drop_chemicals':'剔除化工','drop_machinery':'剔除机械','drop_textile':'剔除纺织'}
+rows=[]
+for _,z in a.iterrows():
+ p='<0.001' if z.p_value<.001 else f'{z.p_value:.4f}'
+ rows.append(f"{z.test.replace('baseline','基准')} & {labels[z.spec]} & {z.estimate:.5f} & {z.std_error:.5f} & ${p}$ & {int(z.n_obs)}"+r'\\')
+end=r'''\bottomrule\end{longtable}\normalsize
 \begin{thebibliography}{9}
 \bibitem{bdm} Bertrand, M., Duflo, E., and Mullainathan, S. (2004). How Much Should We Trust Differences-In-Differences Estimates? \emph{The Quarterly Journal of Economics}, 119(1), 249--275. \url{https://doi.org/10.1162/003355304772839588}.
 \bibitem{cgm} Cameron, A. C., Gelbach, J. B., and Miller, D. L. (2011). Robust Inference With Multiway Clustering. \emph{Journal of Business \& Economic Statistics}, 29(2), 238--249. \url{https://doi.org/10.1198/jbes.2010.07136}.
 \bibitem{roth} Roth, J. (2022). Pretest with Caution: Event-Study Estimates after Testing for Parallel Trends. \emph{American Economic Review: Insights}, 4(3), 305--322. \url{https://doi.org/10.1257/aeri.20210236}.
 \end{thebibliography}
 \end{document}
+'''
+(r/'paper/main.tex').write_text(intro+'\n'.join(rows)+'\n'+end)
