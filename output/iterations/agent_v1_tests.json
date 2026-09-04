@@ -1,0 +1,44 @@
+[
+  {
+    "case": "valid",
+    "accepted": true,
+    "expected_acceptance": true,
+    "correct": true,
+    "message": ""
+  },
+  {
+    "case": "missing_event_file",
+    "accepted": true,
+    "expected_acceptance": false,
+    "correct": false,
+    "message": ""
+  },
+  {
+    "case": "changed_baseline",
+    "accepted": true,
+    "expected_acceptance": false,
+    "correct": false,
+    "message": ""
+  },
+  {
+    "case": "missing_spec",
+    "accepted": true,
+    "expected_acceptance": false,
+    "correct": false,
+    "message": ""
+  },
+  {
+    "case": "invalid_p",
+    "accepted": true,
+    "expected_acceptance": false,
+    "correct": false,
+    "message": ""
+  },
+  {
+    "case": "duplicate_row",
+    "accepted": false,
+    "expected_acceptance": false,
+    "correct": true,
+    "message": ""
+  }
+]
