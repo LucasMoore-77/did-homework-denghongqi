@@ -32,6 +32,10 @@ def execute(contract, root, out):
         except Exception as e:rows.append(dict(draw=b+1,estimate=np.nan,error=str(e)))
     draws=pd.DataFrame(rows);draws.to_csv(out/'draws.csv',index=False);vals=draws.estimate.dropna();tail=int((abs(vals)>=abs(actual[0])).sum())
     report={'observed_estimate':actual[0],'observed_se':actual[1],'B':c['repetitions'],'successful':len(vals),'failed':int(draws.estimate.isna().sum()),'tail_count':tail,'tail_rate':tail/len(vals),'mean':vals.mean(),'sd':vals.std(),'q025':vals.quantile(.025),'q975':vals.quantile(.975),'seed':c['seed'],'sha256_before':sha,'sha256_after':hashlib.sha256(path.read_bytes()).hexdigest(),'absorbed':absorbed,'treatment_year':int(start),'treated_units':nt,'control_units':len(ids)-nt,'mapping':{k:c[k] for k in ['id','time','outcome','treatment']}}
+    report.update(status='complete' if len(vals)==c['repetitions'] else 'incomplete',
+                  smoothed_tail_rate=(tail+1)/(len(vals)+1), resolution=1/(len(vals)+1),
+                  tail_probability_upper95=(1-.05**(1/len(vals))) if tail==0 else float(stats.beta.ppf(.95,tail+1,len(vals)-tail)),
+                  interpretation='Simulation diagnostic under supplied assignment, not a causal randomization p-value')
     assert report['sha256_before']==report['sha256_after']
     (out/'summary.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,default=float));return report
 if __name__=='__main__':
