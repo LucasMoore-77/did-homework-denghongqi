@@ -1,0 +1,79 @@
+    test                       spec  estimate  std_error      p_value  n_obs
+baseline               firm_cluster  0.120920   0.004723 5.558866e-83   3240
+      R3     log_labor_productivity  0.120534   0.005261 3.143023e-72   3240
+      R4                no_controls  0.120908   0.004724 5.746791e-83   3240
+      R4     full_controls_absorbed  0.120920   0.004723 5.558866e-83   3240
+      R4              add_firm_size  0.120822   0.004806 3.750586e-81   3240
+      R5                   industry  0.120920   0.001901 8.563416e-06   3240
+      R5                   province  0.120920   0.003249 7.209562e-04   3240
+      R5               firm_id+year  0.120920   0.026296 1.759319e-03   3240
+      R6                winsor_1_99  0.116987   0.005234 5.829631e-70   3240
+      R7           drop_electronics  0.120382   0.005620 1.348647e-59   2376
+      R7       trim_size_firms_5_95  0.120954   0.005006 2.214252e-74   2916
+      R7           window_2018_2022  0.081471   0.006416 8.967737e-31   1800
+      T1    minmax_capability_proxy  0.170879   0.007427 1.263178e-72   3240
+      T2            industry_group0  0.124916   0.009813 5.059349e-21    738
+      T2            industry_group1  0.123541   0.008711 3.468422e-25    864
+      T2        industry_difference -0.001375   0.013086 9.164212e-01   1602
+      T2           ownership_group0  0.122434   0.005319 9.732728e-68   2655
+      T2           ownership_group1  0.113730   0.010253 1.515116e-16    585
+      T2       ownership_difference -0.008703   0.011446 4.475335e-01   3240
+      T2                size_group0  0.122708   0.007139 9.727906e-40   1620
+      T2                size_group1  0.120154   0.006486 1.789212e-43   1620
+      T2            size_difference -0.002554   0.009634 7.910442e-01   3240
+      T3     capability_interaction  0.002528   0.004045 5.323671e-01   3240
+      T3 digital_at_mean_capability  0.119486   0.005268 2.623947e-71   3240
+      T4              industry_year  0.120609   0.004705 4.146675e-83   3240
+      T4     industry_province_year  0.120913   0.004693 1.245198e-83   3240
+      T5             drop_chemicals  0.121112   0.005305 5.560900e-67   2646
+      T5           drop_electronics  0.120382   0.005620 1.348647e-59   2376
+      T5             drop_machinery  0.122565   0.005470 4.670238e-61   2196
+      T5               drop_textile  0.119775   0.005400 2.273665e-63   2502
+{
+  "R1": {
+    "F": 0.492605409530202,
+    "df_num": 3,
+    "df_den": 359,
+    "p_value": 0.6876273095408623
+  },
+  "R2_bare": {
+    "B": 300,
+    "seed": 825200520,
+    "success": 300,
+    "failures": 0,
+    "mean": 0.00011940463614166049,
+    "sd": 0.007858283555010585,
+    "q025": -0.013939249711313481,
+    "q975": 0.01651489458553996,
+    "tail_count": 0,
+    "naive_tail_rate": 0.0
+  },
+  "R6": {
+    "low": 1.079695730678701,
+    "high": 2.519094957384186,
+    "changed": 66
+  },
+  "R7": {
+    "size_low": 13.311755208437537,
+    "size_high": 49.380363807899734,
+    "full_event_post_2020_2022_mean": 0.08688931411356654,
+    "full_event_post_2020_2024_mean": 0.12549685599831484
+  },
+  "T1": {
+    "cap_min": -2.8604137173557698,
+    "cap_max": 2.441555112668879,
+    "scale": "one unit of min-max proxy; not binary ATT"
+  },
+  "data": {
+    "n_obs": 3240,
+    "n_firms": 360,
+    "n_treated": 151,
+    "n_control": 209,
+    "sha256": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+    "absorbed_controls": [
+      "export_share",
+      "soe"
+    ],
+    "inference": "CR1 group_debias, absorbed FE counted; t(min clusters-1) for displayed p/CI"
+  }
+}

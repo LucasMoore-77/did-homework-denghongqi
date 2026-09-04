@@ -1,0 +1,2 @@
+test,spec,term,estimate,std_error,p_value,df,ci_low,ci_high,n_obs,n_firms,treated_firms,control_firms,p_holm
+R3,log_labor_productivity,digital,0.1205339434342859,0.005261080257719055,3.143023426882501e-72,359,0.1101875348933435,0.13088035197522832,3240,360,151,209,

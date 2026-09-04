@@ -4,3 +4,6 @@
 
 ## 初始化
 从课堂 demo-project 选择性复制数据、DGP、Python/Stata脚本及基线；不复制其他学生代码、Git 历史与结论。原论文留存 source/paper/main.tex；本次不使用 Matlab。参考三份同学材料的组织、证据索引与反思深度，具体统计解释均独立复核。
+
+## Part A 运行中发现与修复
+原课堂Python公式同时加入企业FE和时间不变的export_share、soe，在当前statsmodels环境下产生0.12083678、SE=5.82118的异常结果。已保留原CSV与日志到output/iterations；不接受这一输出。移除被FE吸收的两项，用满秩虚拟变量OLS与PanelOLS交叉验证。T4同时加入两套类别年虚拟变量时触发秩检查，改为显式省略各类别及年份基准；未关闭秩检查。

@@ -1,0 +1,2 @@
+test,spec,term,estimate,std_error,p_value,df,ci_low,ci_high,n_obs,n_firms,treated_firms,control_firms,p_holm
+baseline,firm_cluster,digital,0.12091953763494402,0.004723359854126347,5.55886571700504e-83,359,0.11163060677992132,0.13020846848996673,3240,360,151,209,

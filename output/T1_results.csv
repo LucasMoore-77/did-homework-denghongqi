@@ -1,0 +1,2 @@
+test,spec,term,estimate,std_error,p_value,df,ci_low,ci_high,n_obs,n_firms,treated_firms,control_firms,p_holm
+T1,minmax_capability_proxy,intensity,0.17087860300546617,0.007426821251373814,1.2631777263151545e-72,359,0.15627306135562619,0.18548414465530616,3240,360,151,209,

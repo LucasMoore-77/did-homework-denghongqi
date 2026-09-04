@@ -1,0 +1,48 @@
+{
+  "R1": {
+    "F": 0.492605409530202,
+    "df_num": 3,
+    "df_den": 359,
+    "p_value": 0.6876273095408623
+  },
+  "R2_bare": {
+    "B": 300,
+    "seed": 825200520,
+    "success": 300,
+    "failures": 0,
+    "mean": 0.00011940463614166049,
+    "sd": 0.007858283555010585,
+    "q025": -0.013939249711313481,
+    "q975": 0.01651489458553996,
+    "tail_count": 0,
+    "naive_tail_rate": 0.0
+  },
+  "R6": {
+    "low": 1.079695730678701,
+    "high": 2.519094957384186,
+    "changed": 66
+  },
+  "R7": {
+    "size_low": 13.311755208437537,
+    "size_high": 49.380363807899734,
+    "full_event_post_2020_2022_mean": 0.08688931411356654,
+    "full_event_post_2020_2024_mean": 0.12549685599831484
+  },
+  "T1": {
+    "cap_min": -2.8604137173557698,
+    "cap_max": 2.441555112668879,
+    "scale": "one unit of min-max proxy; not binary ATT"
+  },
+  "data": {
+    "n_obs": 3240,
+    "n_firms": 360,
+    "n_treated": 151,
+    "n_control": 209,
+    "sha256": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+    "absorbed_controls": [
+      "export_share",
+      "soe"
+    ],
+    "inference": "CR1 group_debias, absorbed FE counted; t(min clusters-1) for displayed p/CI"
+  }
+}
