@@ -10,3 +10,5 @@ tmp/
 *.fdb_latexmk
 *.synctex.gz
 *.xdv
+
+/paper/*.log

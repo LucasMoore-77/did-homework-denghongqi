@@ -1,0 +1,13 @@
+{
+  "protected_files_unchanged": true,
+  "before": {
+    "data/raw/digital_transformation_firm_panel.csv": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+    "paper/main.tex": "8a995a87ead61c99acaeaad42228664124fa0a01d6299c237f32d11c5d5d857d",
+    "paper/._main.tex": "9c2af14262d3f47b1d8b40e06758b23d701cee611dd061a3da64f83ca0ad5148"
+  },
+  "after": {
+    "data/raw/digital_transformation_firm_panel.csv": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+    "paper/main.tex": "8a995a87ead61c99acaeaad42228664124fa0a01d6299c237f32d11c5d5d857d",
+    "paper/._main.tex": "9c2af14262d3f47b1d8b40e06758b23d701cee611dd061a3da64f83ca0ad5148"
+  }
+}

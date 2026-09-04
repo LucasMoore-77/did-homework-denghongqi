@@ -1,12 +1,34 @@
 """Deterministic evidence checks and report assembly; not an independent LLM call."""
 from pathlib import Path
-import json,argparse
+import json,argparse,hashlib
+import numpy as np
 import pandas as pd
 
 def validate(root):
-    o=Path(root)/'output';r=pd.read_csv(o/'all_results.csv')
-    assert {'test','spec','estimate','std_error','p_value','n_obs'}<=set(r.columns)
-    assert not r.duplicated(['test','spec']).any()
+    root=Path(root);o=root/'output';c=json.loads((root/'config/evaluation.json').read_text())
+    missing=[f for f in c['required_files'] if not (root/f).is_file()]
+    if missing:raise ValueError('STOP: missing required evidence: '+', '.join(missing))
+    r=pd.read_csv(o/'all_results.csv')
+    assert {'test','spec','estimate','std_error','p_value','n_obs'}<=set(r.columns),'STOP: missing columns'
+    assert not r.duplicated(['test','spec']).any(),'STOP: duplicate result key'
+    assert set(map(tuple,r[['test','spec']].values))==set(map(tuple,c['required_records'])),'STOP: missing/unexpected specification'
+    assert np.isfinite(r[['estimate','std_error','p_value','n_obs']]).all().all(),'STOP: nonfinite statistic'
+    assert r.p_value.between(0,1).all() and (r.std_error>0).all(),'STOP: invalid inference values'
+    assert (r.n_obs>0).all() and (r.n_obs%1==0).all(),'STOP: invalid sample size'
+    for name,group in r.groupby('test'):
+        ref=pd.read_csv(o/f'{name}_results.csv').set_index('spec').sort_index();got=group.set_index('spec').sort_index()
+        assert np.allclose(ref[['estimate','std_error','p_value','n_obs']],got[['estimate','std_error','p_value','n_obs']],rtol=1e-10,atol=1e-12),f'STOP: source mismatch {name}'
+    base=r[r.test=='baseline'].iloc[0]
+    st=pd.read_csv(o/'stata_did_results.csv').iloc[0];py=pd.read_csv(o/'python_did_results.csv').iloc[0]
+    assert max(abs(base.estimate-st.estimate),abs(base.estimate-py.estimate))<c['coefficient_tolerance'],'STOP: baseline mismatch'
+    event=pd.read_csv(o/'R1_event_study.csv');assert len(event)==event.event_time.nunique(),'STOP: duplicated event time'
+    diag=json.loads((o/'diagnostics.json').read_text());assert len(event)==pd.read_csv(root/'data/raw/digital_transformation_firm_panel.csv').year.nunique(),'STOP: missing event period'
+    prov=json.loads((o/'provenance.json').read_text());assert hashlib.sha256((root/'data/raw/digital_transformation_firm_panel.csv').read_bytes()).hexdigest()==prov['data_sha256'],'STOP: original data changed'
+    sim=json.loads((o/'skill_r2/summary.json').read_text());draw=pd.read_csv(o/'skill_r2/draws.csv')
+    assert sim['status']=='complete' and len(draw)==sim['B']==sim['successful'],'STOP: incomplete placebo repetitions'
+    assert sim['failed']==0 and np.isfinite(draw.estimate).all(),'STOP: placebo failure'
+    tail=int((abs(draw.estimate)>=abs(base.estimate)).sum());assert tail==sim['tail_count'],'STOP: placebo tail mismatch'
+    assert abs((tail+1)/(len(draw)+1)-sim['smoothed_tail_rate'])<1e-12,'STOP: placebo summary mismatch'
     return r
 
 def report(root):
@@ -15,6 +37,8 @@ def report(root):
 
 ## 1 主结果
 合成面板360家企业、3240个观测，处理组151家，对照组209家。企业与年份固定效应，企业聚类：系数{b.estimate:.8f}，SE={b.std_error:.8f}，95%区间[{b.ci_low:.6f},{b.ci_high:.6f}]，t(359) p={b.p_value:.4g}。证据：all_results.csv，test=baseline，spec=firm_cluster；与课堂Stata留存结果一致，未在本次运行Stata。
+
+输入验证：逐项必备文件、全部设定、CSV交叉一致性、概率范围、数据哈希与随机重复均已校验。详见evaluation_integrity.json；负向测试另见iterations/agent_v2_tests.json。
 
 ## 2 稳健性判定表
 {(o/'robustness_summary.md').read_text().split('| 检验')[1].join(['| 检验',''])}
@@ -40,4 +64,9 @@ T2三个正式差异检验及Holm校正均未支持行业、所有制、规模�
 '''
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',default='.');p.add_argument('--output',default='output/eval_robustness_report.md');a=p.parse_args();root=Path(a.root);target=(root/a.output).resolve();assert target.is_relative_to((root/'output').resolve()),'report output must stay under output/'
+    watched=[root/'data/raw/digital_transformation_firm_panel.csv',*list((root/'paper').glob('*.tex'))]
+    before={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in watched}
     text=report(root);target.parent.mkdir(exist_ok=True,parents=True);target.write_text(text)
+    after={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in watched}
+    assert before==after,'STOP: protected files changed'
+    (root/'output/evaluation_integrity.json').write_text(json.dumps({'protected_files_unchanged':before==after,'before':before,'after':after},ensure_ascii=False,indent=2))

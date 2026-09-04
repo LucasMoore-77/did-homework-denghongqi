@@ -3,13 +3,13 @@ import pandas as pd
 r=Path(__file__).resolve().parents[1];a=pd.read_csv(r/'output/all_results.csv')
 intro=r'''\documentclass[UTF8,11pt,fontset=none]{ctexart}
 \usepackage[a4paper,margin=2.4cm]{geometry}
-\setCJKmainfont{Songti SC}
-\setCJKsansfont{Heiti SC}
+\IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}}{\setCJKmainfont{FandolSong-Regular}}
+\IfFontExistsTF{Heiti SC}{\setCJKsansfont{Heiti SC}}{\setCJKsansfont{FandolHei-Regular}}
 \usepackage{amsmath,booktabs,longtable,graphicx,hyperref}
 \hypersetup{hidelinks}
-\setlength{\parskip}{4pt}
+\setlength{\parskip}{2pt}
 \setlength{\emergencystretch}{2em}
-\renewcommand{\arraystretch}{1.15}
+\renewcommand{\arraystretch}{1.08}
 \title{数字化转型与企业生产率\\合成面板中的DID稳健性检验与AI研究流程审计}
 \author{邓鸿琪\quad 825200520\\江西财经大学数字经济学院\\2025级产业经济学硕士研究生}
 \date{2026年9月4日}

@@ -1,0 +1,44 @@
+[
+  {
+    "case": "valid",
+    "accepted": true,
+    "expected_acceptance": true,
+    "correct": true,
+    "message": ""
+  },
+  {
+    "case": "missing_event_file",
+    "accepted": false,
+    "expected_acceptance": false,
+    "correct": true,
+    "message": "STOP: missing required evidence: output/R1_event_study.csv"
+  },
+  {
+    "case": "changed_baseline",
+    "accepted": false,
+    "expected_acceptance": false,
+    "correct": true,
+    "message": "STOP: source mismatch baseline"
+  },
+  {
+    "case": "missing_spec",
+    "accepted": false,
+    "expected_acceptance": false,
+    "correct": true,
+    "message": "STOP: missing/unexpected specification"
+  },
+  {
+    "case": "invalid_p",
+    "accepted": false,
+    "expected_acceptance": false,
+    "correct": true,
+    "message": "STOP: invalid inference values"
+  },
+  {
+    "case": "duplicate_row",
+    "accepted": false,
+    "expected_acceptance": false,
+    "correct": true,
+    "message": "STOP: duplicate result key"
+  }
+]
