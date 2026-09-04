@@ -1,0 +1,9 @@
+numpy
+pandas
+scipy
+statsmodels
+linearmodels
+matplotlib
+tabulate
+python-docx
+pypdf
