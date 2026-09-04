@@ -1,0 +1,34 @@
+{
+  "observed_estimate": 0.12091953763494402,
+  "observed_se": 0.004723359854126347,
+  "B": 300,
+  "successful": 300,
+  "failed": 0,
+  "tail_count": 0,
+  "tail_rate": 0.0,
+  "mean": 0.00011940463614166049,
+  "sd": 0.007858283555010585,
+  "q025": -0.013939249711313481,
+  "q975": 0.01651489458553996,
+  "seed": 825200520,
+  "sha256_before": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+  "sha256_after": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+  "absorbed": [
+    "export_share",
+    "soe"
+  ],
+  "treatment_year": 2020,
+  "treated_units": 151,
+  "control_units": 209,
+  "mapping": {
+    "id": "firm_id",
+    "time": "year",
+    "outcome": "log_tfp",
+    "treatment": "digital"
+  },
+  "status": "complete",
+  "smoothed_tail_rate": 0.0033222591362126247,
+  "resolution": 0.0033222591362126247,
+  "tail_probability_upper95": 0.00993608194445772,
+  "interpretation": "Simulation diagnostic under supplied assignment, not a causal randomization p-value"
+}

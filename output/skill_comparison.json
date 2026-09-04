@@ -1,0 +1,8 @@
+{
+  "same_seed": true,
+  "same_B": 300,
+  "max_coefficient_difference": 0.0,
+  "before_tail_rate": 0,
+  "after_smoothed_tail_rate": 0.0033222591362126247,
+  "after_upper95": 0.00993608194445772
+}
