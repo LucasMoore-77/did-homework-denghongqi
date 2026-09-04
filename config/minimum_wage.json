@@ -1,0 +1,12 @@
+{
+  "data": "output/migration/panel.csv",
+  "id": "district",
+  "time": "period",
+  "outcome": "employment_index",
+  "treatment": "reform_active",
+  "controls": [
+    "wage_pressure"
+  ],
+  "seed": 825200520,
+  "repetitions": 120
+}

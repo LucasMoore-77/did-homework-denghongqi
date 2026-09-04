@@ -1,0 +1,151 @@
+Running scripts/analyze_did.py
+Wrote output/python_did_results.csv
+Wrote output/digital_parallel_trends.png
+Wrote output/digital_event_study.png
+Wrote output/demo_summary.md
+Running scripts/run_robustness.py
+    test                       spec  estimate  std_error      p_value  n_obs
+baseline               firm_cluster  0.120920   0.004723 5.558866e-83   3240
+      R3     log_labor_productivity  0.120534   0.005261 3.143023e-72   3240
+      R4                no_controls  0.120908   0.004724 5.746791e-83   3240
+      R4     full_controls_absorbed  0.120920   0.004723 5.558866e-83   3240
+      R4              add_firm_size  0.120822   0.004806 3.750586e-81   3240
+      R5                   industry  0.120920   0.001901 8.563416e-06   3240
+      R5                   province  0.120920   0.003249 7.209562e-04   3240
+      R5               firm_id+year  0.120920   0.026296 1.759319e-03   3240
+      R6                winsor_1_99  0.116987   0.005234 5.829631e-70   3240
+      R7           drop_electronics  0.120382   0.005620 1.348647e-59   2376
+      R7       trim_size_firms_5_95  0.120954   0.005006 2.214252e-74   2916
+      R7           window_2018_2022  0.081471   0.006416 8.967737e-31   1800
+      T1    minmax_capability_proxy  0.170879   0.007427 1.263178e-72   3240
+      T2            industry_group0  0.124916   0.009813 5.059349e-21    738
+      T2            industry_group1  0.123541   0.008711 3.468422e-25    864
+      T2        industry_difference -0.001375   0.013086 9.164212e-01   1602
+      T2           ownership_group0  0.122434   0.005319 9.732728e-68   2655
+      T2           ownership_group1  0.113730   0.010253 1.515116e-16    585
+      T2       ownership_difference -0.008703   0.011446 4.475335e-01   3240
+      T2                size_group0  0.122708   0.007139 9.727906e-40   1620
+      T2                size_group1  0.120154   0.006486 1.789212e-43   1620
+      T2            size_difference -0.002554   0.009634 7.910442e-01   3240
+      T3     capability_interaction  0.002528   0.004045 5.323671e-01   3240
+      T3 digital_at_mean_capability  0.119486   0.005268 2.623947e-71   3240
+      T4              industry_year  0.120609   0.004705 4.146675e-83   3240
+      T4     industry_province_year  0.120913   0.004693 1.245198e-83   3240
+      T5             drop_chemicals  0.121112   0.005305 5.560900e-67   2646
+      T5           drop_electronics  0.120382   0.005620 1.348647e-59   2376
+      T5             drop_machinery  0.122565   0.005470 4.670238e-61   2196
+      T5               drop_textile  0.119775   0.005400 2.273665e-63   2502
+{
+  "R1": {
+    "F": 0.492605409530202,
+    "df_num": 3,
+    "df_den": 359,
+    "p_value": 0.6876273095408623
+  },
+  "R2_bare": {
+    "B": 300,
+    "seed": 825200520,
+    "success": 300,
+    "failures": 0,
+    "mean": 0.00011940463614166049,
+    "sd": 0.007858283555010585,
+    "q025": -0.013939249711313481,
+    "q975": 0.01651489458553996,
+    "tail_count": 0,
+    "naive_tail_rate": 0.0
+  },
+  "R6": {
+    "low": 1.079695730678701,
+    "high": 2.519094957384186,
+    "changed": 66
+  },
+  "R7": {
+    "size_low": 13.311755208437537,
+    "size_high": 49.380363807899734,
+    "full_event_post_2020_2022_mean": 0.08688931411356654,
+    "full_event_post_2020_2024_mean": 0.12549685599831484
+  },
+  "T1": {
+    "cap_min": -2.8604137173557698,
+    "cap_max": 2.441555112668879,
+    "scale": "one unit of min-max proxy; not binary ATT"
+  },
+  "data": {
+    "n_obs": 3240,
+    "n_firms": 360,
+    "n_treated": 151,
+    "n_control": 209,
+    "sha256": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+    "absorbed_controls": [
+      "export_share",
+      "soe"
+    ],
+    "inference": "CR1 group_debias, absorbed FE counted; t(min clusters-1) for displayed p/CI"
+  }
+}
+Running scripts/summarize_results.py
+# 稳健性检验汇总
+
+“通过”仅表示该项局部诊断未发现预定问题；“警示”表示推断、估计对象或假说解释需限定；“失败”用于执行/识别条件不满足，不把不显著自动判为失败。
+
+| 检验 | 判定 | 观察与依据 |
+|---|---|---|
+| R1 | 警示 | F(3,359)=0.4926，p=0.6876，未拒绝处理前系数联合为零。但DGP已知存在每年0.0008的组别趋势，说明不显著不能证明假设成立。 |
+| R2 | 通过 | 300次随机企业标签模拟，均值0.000119，95%经验范围[-0.01394,0.01651]，超过真实系数的次数0。初版直接尾部率为0；Skill修订后加一平滑比例0.003322，单侧95%上界0.009936。此项只通过随机标签诊断。 |
+| R3 | 通过 | 对数劳动生产率系数0.120534，方向一致；DGP以TFP加噪声生成它，证据不独立。 |
+| R4 | 通过 | 系数0.120822—0.120920；出口比例和SOE时间不变，被企业FE吸收。当期规模只在已知DGP中排除中介风险。 |
+| R5 | 警示 | 二维企业+年份SE=0.026296，为基准的5.57倍；t(8) p=0.001759。行业仅4簇、地区仅3簇、年份仅9簇，小簇推断未解决；不能声称精度不依赖聚类。 |
+| R6 | 通过 | 缩尾66个观测，系数0.116987，相对基准下降3.25%，正向关系保留。 |
+| R7 | 警示 | 剔除电子/规模两端后基本一致；2018—2022窗口系数0.081471，比全窗低32.62%。全模型2020—2022事件系数均值0.086889，仅作不同基期的辅助对照；动态效应递增改变了平均对象。 |
+| T1 | 警示 | 强度代理系数0.170879；单位为整个min-max区间，不是二元ATT，不能用其大于基准解释收益更强。 |
+| T2 | 警示 | 行业、所有制、规模的正式差异检验均不显著，Holm校正p均为1；不足以支持异质性，也不足以证明各组完全相同。 |
+| T3 | 警示 | 交互项0.002528，SE=0.004045，p=0.5324；能力互补性未获支持。该假说未获支持不等于主效应或程序失败。 |
+| T4 | 通过 | 行业年和行业年+地区年FE系数分别0.120609、0.120913；共同层面冲击不足以解释点估计，企业层面时变混杂仍可能存在。 |
+| T5 | 通过 | 逐一剔除四行业，系数范围0.119775—0.122565，排除单一行业驱动的初步担忧；不建立外部效度。 |
+
+完整数字：all_results.csv、R1_event_study.csv、R2_bare_draws.csv、diagnostics.json。除R5外均为企业聚类；全表p值使用t(G−1)参考分布，原Python脚本CSV的p值为正态近似，两者不能混读。
+
+Running .claude/skills/robustness-check/scripts/placebo.py
+{
+  "observed_estimate": 0.12091953763494402,
+  "observed_se": 0.004723359854126347,
+  "B": 300,
+  "successful": 300,
+  "failed": 0,
+  "tail_count": 0,
+  "tail_rate": 0.0,
+  "mean": 0.00011940463614166049,
+  "sd": 0.007858283555010585,
+  "q025": -0.013939249711313481,
+  "q975": 0.01651489458553996,
+  "seed": 825200520,
+  "sha256_before": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+  "sha256_after": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+  "absorbed": [
+    "export_share",
+    "soe"
+  ],
+  "treatment_year": 2020,
+  "treated_units": 151,
+  "control_units": 209,
+  "mapping": {
+    "id": "firm_id",
+    "time": "year",
+    "outcome": "log_tfp",
+    "treatment": "digital"
+  },
+  "status": "complete",
+  "smoothed_tail_rate": 0.0033222591362126247,
+  "resolution": 0.0033222591362126247,
+  "tail_probability_upper95": 0.00993608194445772,
+  "interpretation": "Simulation diagnostic under supplied assignment, not a causal randomization p-value"
+}
+Running scripts/migration_demo.py
+{'observed_estimate': -0.04144617332147849, 'observed_se': 0.006744377724232257, 'B': 120, 'successful': 120, 'failed': 0, 'tail_count': 0, 'tail_rate': 0.0, 'mean': np.float64(-5.089810024074008e-06), 'sd': np.float64(0.007678021985040027), 'q025': np.float64(-0.01622049363487752), 'q975': np.float64(0.014344000153736436), 'seed': 825200520, 'sha256_before': '4981899d789b914ca76b737d0db34118f71f500374d57845bfc6c12ebfc1ac3b', 'sha256_after': '4981899d789b914ca76b737d0db34118f71f500374d57845bfc6c12ebfc1ac3b', 'absorbed': [], 'treatment_year': 2021, 'treated_units': 36, 'control_units': 44, 'mapping': {'id': 'district', 'time': 'period', 'outcome': 'employment_index', 'treatment': 'reform_active'}, 'status': 'complete', 'smoothed_tail_rate': 0.008264462809917356, 'resolution': 0.008264462809917356, 'tail_probability_upper95': 0.024655401055656334, 'interpretation': 'Simulation diagnostic under supplied assignment, not a causal randomization p-value'}
+[{'case': 'duplicate', 'rejected': True, 'message': 'duplicate id-time'}, {'case': 'reversal', 'rejected': True, 'message': 'reversal'}, {'case': 'staggered', 'rejected': True, 'message': 'staggered treatment requires another estimator'}]
+Running scripts/test_agent_inputs.py
+[{'case': 'valid', 'accepted': True, 'expected_acceptance': True, 'correct': True, 'message': ''}, {'case': 'missing_event_file', 'accepted': False, 'expected_acceptance': False, 'correct': True, 'message': 'STOP: missing required evidence: output/R1_event_study.csv'}, {'case': 'changed_baseline', 'accepted': False, 'expected_acceptance': False, 'correct': True, 'message': 'STOP: source mismatch baseline'}, {'case': 'missing_spec', 'accepted': False, 'expected_acceptance': False, 'correct': True, 'message': 'STOP: missing/unexpected specification'}, {'case': 'invalid_p', 'accepted': False, 'expected_acceptance': False, 'correct': True, 'message': 'STOP: invalid inference values'}, {'case': 'duplicate_row', 'accepted': False, 'expected_acceptance': False, 'correct': True, 'message': 'STOP: duplicate result key'}]
+Running scripts/verify_results.py
+{'status': 'passed', 'independent_twfe_coefficient': np.float64(0.12091953763494401), 'independent_two_way_se': 0.02629647640432062, 'panel_two_way_se': np.float64(0.0262964764043209), 'two_way_se_difference': np.float64(2.7755575615628914e-16), 'raw_sha256': '5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f', 'checks': ['full-rank OLS matches PanelOLS', 'CGM covariance matches two-way PanelOLS', 'sample counts', 'Holm adjustment', 'treatment aliases', 'evaluation evidence gate']}
+Running scripts/evaluate.py
+Analysis complete. Historical pre-revision evidence retained. Compile paper separately.

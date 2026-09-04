@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "independent_twfe_coefficient": 0.12091953763494401,
+  "independent_two_way_se": 0.02629647640432062,
+  "panel_two_way_se": 0.0262964764043209,
+  "two_way_se_difference": 2.7755575615628914e-16,
+  "raw_sha256": "5b3f6de173d7cb7709dd08c1819c546b05fa23cc6833f9508b3ea1441b7bbf8f",
+  "checks": [
+    "full-rank OLS matches PanelOLS",
+    "CGM covariance matches two-way PanelOLS",
+    "sample counts",
+    "Holm adjustment",
+    "treatment aliases",
+    "evaluation evidence gate"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "observed_estimate": -0.04144617332147849,
+  "observed_se": 0.006744377724232257,
+  "B": 120,
+  "successful": 120,
+  "failed": 0,
+  "tail_count": 0,
+  "tail_rate": 0.0,
+  "mean": -5.089810024074008e-06,
+  "sd": 0.007678021985040027,
+  "q025": -0.01622049363487752,
+  "q975": 0.014344000153736436,
+  "seed": 825200520,
+  "sha256_before": "4981899d789b914ca76b737d0db34118f71f500374d57845bfc6c12ebfc1ac3b",
+  "sha256_after": "4981899d789b914ca76b737d0db34118f71f500374d57845bfc6c12ebfc1ac3b",
+  "absorbed": [],
+  "treatment_year": 2021,
+  "treated_units": 36,
+  "control_units": 44,
+  "mapping": {
+    "id": "district",
+    "time": "period",
+    "outcome": "employment_index",
+    "treatment": "reform_active"
+  },
+  "status": "complete",
+  "smoothed_tail_rate": 0.008264462809917356,
+  "resolution": 0.008264462809917356,
+  "tail_probability_upper95": 0.024655401055656334,
+  "interpretation": "Simulation diagnostic under supplied assignment, not a causal randomization p-value"
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "case": "duplicate",
+    "rejected": true,
+    "message": "duplicate id-time"
+  },
+  {
+    "case": "reversal",
+    "rejected": true,
+    "message": "reversal"
+  },
+  {
+    "case": "staggered",
+    "rejected": true,
+    "message": "staggered treatment requires another estimator"
+  }
+]
