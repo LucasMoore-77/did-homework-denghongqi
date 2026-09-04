@@ -112,12 +112,12 @@ for line in history.splitlines():
  pp=doc.add_paragraph(line);pp.paragraph_format.space_after=Pt(0);pp.paragraph_format.line_spacing=1
  for run in pp.runs:run.font.name='Menlo';run.font.size=Pt(7.3)
 md.append('```text\n'+history+'```\n')
-p('快照保存于生成材料时；后续提交以仓库 git log --oneline --graph --all 为准。远程仓库由本人最后创建并推送。',True)
+p('快照保存于生成材料时；后续提交以仓库 git log --oneline --graph --all 为准。远程仓库已创建，待本人推送完整历史。',True)
 page();h('附录  提交物自查清单')
-table(['提交物','位置','状态'],[['完整Git仓库','did-homework/.git','已完成'],['识别目标','output/estimand.md','已完成'],['Prompt','prompts/robustness/','基准+12张'],['检验汇总','output/robustness_summary.md','已完成'],['全部结果','output/*.csv、*.png','已完成'],['Skill','.claude/skills/robustness-check/','已验证'],['Skill对照','audit-log.md、output/skill_comparison.json','已完成'],['Agent','.claude/agents/eval-did-robustness.md','已完成'],['综合评估','output/eval_robustness_report.md','已完成'],['论文与PDF','paper/main.tex、main.pdf','实际编译'],['AI使用记录','audit-log.md','已完成'],['两轮迭代','output/iteration_reflection.md','已完成'],['Git历史','output/git-history.txt','已完成'],['纸质材料','submission/纸质提交材料.docx及PDF','已生成'],['远程推送与链接','按GITHUB_UPLOAD.md操作','待本人完成']],[3.3,10.8,2.2])
+table(['提交物','位置','状态'],[['完整Git仓库','did-homework/.git','已完成'],['识别目标','output/estimand.md','已完成'],['Prompt','prompts/robustness/','基准+12张'],['检验汇总','output/robustness_summary.md','已完成'],['全部结果','output/*.csv、*.png','已完成'],['Skill','.claude/skills/robustness-check/','已验证'],['Skill对照','audit-log.md、output/skill_comparison.json','已完成'],['Agent','.claude/agents/eval-did-robustness.md','已完成'],['综合评估','output/eval_robustness_report.md','已完成'],['论文与PDF','paper/main.tex、main.pdf','实际编译'],['AI使用记录','audit-log.md','已完成'],['两轮迭代','output/iteration_reflection.md','已完成'],['Git历史','output/git-history.txt','已完成'],['纸质材料','submission/纸质提交材料.docx及PDF','已生成'],['远程推送与链接','封面链接已填；按GITHUB_UPLOAD.md推送','待推送']],[3.3,10.8,2.2])
 h('关键证据速查',2)
 p('复现：output/baseline_comparison.md。推断口径：diagnostics.json及all_results.csv。原始公式异常：output/iterations/baseline_original_script.csv。迁移：output/migration/README.md和negative_tests.json。文献核查：quality_reports/crossref_verified.json。')
-p('提交前需将实际GitHub仓库链接填入封面，核对电子文件与打印稿一致。论文结果适用于本次合成数据演示。')
+p('封面已填写实际GitHub仓库链接。提交前完成远程推送，并核对电子文件与打印稿一致。论文结果适用于本次合成数据演示。')
 # Remove inherited template borders and theme font overrides; set explicit CJK runs.
 for element in doc.styles.element.xpath('.//w:pBdr'):
     element.getparent().remove(element)

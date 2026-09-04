@@ -28,4 +28,4 @@ Codex按S1—S6进行主题解释，辅助脚本生成报告；没有独立模�
 使用skill-creator指导技能设计；使用documents、pdf完成材料及渲染。Skill结构校验在安装PyYAML后通过；此前缺少依赖的验证失败未当作成功。依赖安装时外置盘生成的AppleDouble元文件干扰matplotlib，清理本次新建虚拟环境内元文件后恢复。本次借助Codex审查关键公式、固定效应交互构造、二项尾部解释和Agent输出权限。
 
 ## 最终复现与视觉检查
-完整reproduce.py已成功执行。论文5页经LaTeX实际编译与逐页PNG检查；纸质材料7页完成Word、PDF与Markdown。LibreOffice初始字体范围不包含中文字体，先拒绝缺字PDF，补充Noto CJK与当前进程fontconfig目录后重渲染，并调整固定行距与分页，消除溢出和空页。最终文件包含清楚的姓名学号、两张完整Prompt、两轮实际对照、Git文本及清单。仅真实GitHub链接和远程推送由本人补充。
+完整reproduce.py已成功执行。论文5页经LaTeX实际编译与逐页PNG检查；纸质材料7页完成Word、PDF与Markdown。LibreOffice初始字体范围不包含中文字体，先拒绝缺字PDF，补充Noto CJK与当前进程fontconfig目录后重渲染，并调整固定行距与分页，消除溢出和空页。最终文件包含清楚的姓名学号、两张完整Prompt、两轮实际对照、Git文本及清单。GitHub仓库已由本人创建，链接已填入封面；远程推送待本人完成。
