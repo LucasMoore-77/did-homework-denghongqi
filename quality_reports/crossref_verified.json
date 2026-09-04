@@ -1,0 +1,161 @@
+[
+  {
+    "DOI": "10.1162/003355304772839588",
+    "title": [
+      "How Much Should We Trust Differences-In-Differences Estimates?"
+    ],
+    "author": [
+      {
+        "given": "M.",
+        "family": "Bertrand",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "E.",
+        "family": "Duflo",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "S.",
+        "family": "Mullainathan",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2004,
+          2,
+          1
+        ]
+      ]
+    },
+    "container-title": [
+      "The Quarterly Journal of Economics"
+    ],
+    "volume": "119",
+    "issue": "1",
+    "page": "249-275",
+    "URL": "https://doi.org/10.1162/003355304772839588"
+  },
+  {
+    "DOI": "10.1257/aeri.20210236",
+    "title": [
+      "Pretest with Caution: Event-Study Estimates after Testing for Parallel Trends"
+    ],
+    "author": [
+      {
+        "given": "Jonathan",
+        "family": "Roth",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Brown University (email: )"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2022,
+          9,
+          1
+        ]
+      ]
+    },
+    "container-title": [
+      "American Economic Review: Insights"
+    ],
+    "volume": "4",
+    "issue": "3",
+    "page": "305-322",
+    "URL": "https://doi.org/10.1257/aeri.20210236"
+  },
+  {
+    "DOI": "10.1198/jbes.2010.07136",
+    "title": [
+      "Robust Inference With Multiway Clustering"
+    ],
+    "author": [
+      {
+        "given": "A. Colin",
+        "family": "Cameron",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jonah B.",
+        "family": "Gelbach",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Douglas L.",
+        "family": "Miller",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2011,
+          4
+        ]
+      ]
+    },
+    "container-title": [
+      "Journal of Business &amp; Economic Statistics"
+    ],
+    "volume": "29",
+    "issue": "2",
+    "page": "238-249",
+    "URL": "https://doi.org/10.1198/jbes.2010.07136"
+  }
+]

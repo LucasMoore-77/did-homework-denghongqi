@@ -29,7 +29,7 @@ def load_data() -> pd.DataFrame:
 
 def estimate_did(data: pd.DataFrame):
     model = smf.ols(
-        "log_tfp ~ digital + capital_intensity + C(firm_id) + C(year)",
+        "log_tfp ~ digital + capital_intensity + export_share + soe + C(firm_id) + C(year)",
         data=data,
     )
     with warnings.catch_warnings():

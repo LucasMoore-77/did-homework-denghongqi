@@ -1,0 +1,6 @@
+/Volumes/HP/面向AI时代的经济学研究工具和方法/825200520邓鸿琪/did-homework/scripts/analyze_did.py:41: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return model.fit(cov_type="cluster", cov_kwds={"groups": data["firm_id"]})
+Wrote output/python_did_results.csv
+Wrote output/digital_parallel_trends.png
+Wrote output/digital_event_study.png
+Wrote output/demo_summary.md

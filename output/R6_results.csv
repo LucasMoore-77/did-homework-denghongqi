@@ -1,0 +1,2 @@
+test,spec,term,estimate,std_error,p_value,df,ci_low,ci_high,n_obs,n_firms,treated_firms,control_firms,p_holm
+R6,winsor_1_99,digital,0.11698698783246238,0.005233959314399775,5.829631189765264e-70,359,0.10669391517423822,0.12728006049068655,3240,360,151,209,
