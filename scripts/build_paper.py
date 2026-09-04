@@ -1,6 +1,10 @@
 from pathlib import Path
 import pandas as pd
+import json
+from datetime import date
 r=Path(__file__).resolve().parents[1];a=pd.read_csv(r/'output/all_results.csv')
+submission_date=date.fromisoformat(json.loads((r/'config/submission.json').read_text())['date'])
+date_label=f'{submission_date.year}年{submission_date.month}月{submission_date.day}日'
 intro=r'''\documentclass[UTF8,11pt,fontset=none]{ctexart}
 \usepackage[a4paper,margin=2.4cm]{geometry}
 \IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}}{\setCJKmainfont{FandolSong-Regular}}
@@ -12,7 +16,7 @@ intro=r'''\documentclass[UTF8,11pt,fontset=none]{ctexart}
 \renewcommand{\arraystretch}{1.08}
 \title{数字化转型与企业生产率\\合成面板中的DID稳健性检验与AI研究流程审计}
 \author{邓鸿琪\quad 825200520\\江西财经大学数字经济学院\\2025级产业经济学硕士研究生}
-\date{2026年9月4日}
+\date{SUBMISSION_DATE}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -72,7 +76,7 @@ T4加入行业年固定效应及进一步的地区年固定效应后，系数为
 \section{讨论与局限}
 本作业支持的是一套可审计流程，而非现实政策结论。首先，严格平行趋势在已知DGP下不成立，额外趋势对简单DID的理论贡献约为 $0.0008\times4.5=0.0036$。基准与真处理收益平均0.115的差约0.00592，还包含有限样本随机噪声和控制残差化。只有模拟允许这种核对，不能把DGP解释当作现实识别策略。
 
-其次，标准误的敏感性、窗口的动态权重、结果变量的机械关系、能力代理的非随机性分别对应不同威胁，不应合并为“多数检验通过”的得票结论。尚未充分解决的真实研究问题包括网络溢出、企业同期管理改革、融资变化、测量误差和样本选择。少簇情况下即使p值低，仍需更适合研究设计的推断方法和更多有效簇。本文没有声称解决这些问题。
+其次，标准误的敏感性、窗口的动态权重、结果变量的机械关系、能力代理的非随机性分别对应不同威胁，不应合并为“多数检验通过”的得票结论。尚未充分解决的真实研究问题包括网络溢出、企业同期管理改革、融资变化、测量误差和样本选择。少簇情况下即使p值低，仍需更适合研究设计的推断方法和更多有效簇。这些问题超出了本次合成数据检验的范围。
 
 \section{AI协作与可复核性}
 每项检验在运行前保存目标、边界、验证和汇报四要素。Skill先从说明和数据识别变量角色，再交由通用契约校验程序检查；不是凭列名猜因果含义。第一轮对照固定数据、种子和模型，300个伪系数完全一致，改进体现在有限模拟尾部解释与证据保存。评估Agent按读结果、判定、稳定性、残余威胁、主题解读、写作建议六步工作，只返回报告，不直接修改论文。第二轮对评估输入完整性与交叉一致性另行验证，证据及反思见仓库相应记录。
@@ -83,7 +87,7 @@ T4加入行业年固定效应及进一步的地区年固定效应后，系数为
 \small
 \begin{longtable}{llrrrr}
 \toprule 项目 & 设定 & b & SE & p & N\\\midrule\endhead
-'''
+'''.replace('SUBMISSION_DATE',date_label)
 labels={'firm_cluster':'企业聚类','log_labor_productivity':'对数劳动生产率','no_controls':'无控制','full_controls_absorbed':'完整控制','add_firm_size':'加入规模','industry':'行业聚类','province':'地区聚类','firm_id+year':'企业+年份聚类','winsor_1_99':'结果缩尾','drop_electronics':'剔除电子','trim_size_firms_5_95':'剔除规模两端','window_2018_2022':'短窗口','minmax_capability_proxy':'能力强度代理','industry_group0':'纺织','industry_group1':'电子','industry_difference':'电子减纺织','ownership_group0':'非SOE','ownership_group1':'SOE','ownership_difference':'SOE减非SOE','size_group0':'小规模','size_group1':'大规模','size_difference':'大减小','capability_interaction':'能力交互','digital_at_mean_capability':'平均能力处处理','industry_year':'行业年FE','industry_province_year':'行业年+地区年FE','drop_chemicals':'剔除化工','drop_machinery':'剔除机械','drop_textile':'剔除纺织'}
 rows=[]
 for _,z in a.iterrows():

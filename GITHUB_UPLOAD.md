@@ -8,7 +8,7 @@
 ## 2 填入封面仓库链接
 打开submission/纸质提交材料.docx，把封面“待本人创建仓库后填写”替换为实际仓库网页链接，并另存/导出为同目录的纸质提交材料.pdf。同步修改config/submission.json中的github_url及submission/纸质提交材料.md封面。
 
-也可在已安装requirements的环境中修改config/submission.json后运行 `python scripts/build_submission.py`，自动更新DOCX与Markdown，再导出PDF。只有封面修改时无需重跑回归。按实际提交日期更改日期即可；分析运行日期保留不变。
+也可在已安装requirements的环境中修改config/submission.json后运行 `python scripts/build_submission.py`，自动更新DOCX与Markdown，再导出PDF。只有封面修改时无需重跑回归。封面日期统一读取config/submission.json，目前设为2026年8月26日；论文生成脚本也读取该配置。分析运行记录与文献核查日期独立保留。
 
 ## 3 推送完整历史
 在终端逐行运行。第三行把地址替换为自己的仓库地址：

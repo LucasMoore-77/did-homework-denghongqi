@@ -1,6 +1,7 @@
 """Build print submission from recorded evidence; uses python-docx."""
 from pathlib import Path
 import json,subprocess,re
+from datetime import date
 from docx import Document
 from docx.shared import Cm,Pt,RGBColor
 from docx.oxml import OxmlElement
@@ -18,6 +19,8 @@ foot=sec.footer.paragraphs[0];foot.alignment=WD_ALIGN_PARAGRAPH.CENTER
 run=foot.add_run('邓鸿琪  825200520  ·  ');run.font.size=Pt(9)
 fld=OxmlElement('w:fldSimple');fld.set(qn('w:instr'),'PAGE');foot._p.append(fld)
 md=[]
+submission_date=date.fromisoformat(meta['date'])
+date_label=f'{submission_date.year}年{submission_date.month}月{submission_date.day}日'
 pending_break=False
 def title(s):doc.add_paragraph(s,'Title');md.append('# '+s+'\n')
 def h(s,level=1):
@@ -59,11 +62,11 @@ def prompt(code):
 
 title('AI时代经济学研究工具与方法')
 p('2026年暑期课程期末作业纸质提交材料')
-table(['项目','内容'],[['姓名','邓鸿琪'],['学号','825200520'],['学院及专业','江西财经大学数字经济学院\n2025级产业经济学硕士研究生'],['GitHub仓库',meta['github_url']],['提交日期',meta['date']],['用AI完成的工作','复现DID，完成11项必做及1项扩展检验；设计Skill与评估Agent；以两轮对照和错误输入测试完善验证，并形成可编译论文。']],[3.0,13.3])
+table(['项目','内容'],[['姓名','邓鸿琪'],['学号','825200520'],['学院及专业','江西财经大学数字经济学院\n2025级产业经济学硕士研究生'],['GitHub仓库',meta['github_url']],['提交日期',date_label],['用AI完成的工作','复现DID，完成11项必做及1项扩展检验；设计Skill与评估Agent；以两轮对照和错误输入测试完善验证，并形成可编译论文。']],[3.0,13.3])
 p('主要发现：基准系数0.120920；短窗口与聚类推断存在敏感性，管理能力互补性未获支持。全部数据为合成教学数据，不构成真实企业因果证据。')
 h('一、识别目标')
 table(['项目','我的回答'],[['处理与对照','151家企业于2020年采用数字化，209家从未采用；面板共360家、3240个观测。'],['处理时间','2016—2024年观察，2020年同步处理；不存在交错采用。'],['目标估计量','处理组2020—2024年平均ATT。基准系数仅在识别假设成立时与该目标对应；改变时间窗口会改变平均对象。'],['关键假设','条件平行趋势、无预期、无溢出、处理定义一致、样本构成稳定；控制项不为处理后中介。'],['主要威胁','采用自选择、企业时变混杂、小簇推断、能力测量误差。DGP含每年0.0008额外趋势，预趋势不显著不能证明假设成立。']],[3.0,13.3])
-p('本材料由Codex辅助分析与草拟，记录以实际文件和执行证据为准；署名研究者提交前复核。',True)
+p('工具使用：Codex用于程序编写与执行、结果解读和文本起草，具体操作及修订依据见audit-log.md。',True)
 page();h('二、我设计的Prompt')
 h('示例A  R2 随机伪处理组安慰剂',2);prompt('R2')
 p('设计理由：固定分配单位、种子和样本，保留全部重复，使后续Skill对照可比较。')
@@ -76,7 +79,7 @@ h('3.1 六模块摘要',2)
 table(['模块','设计要点'],[['触发条件','面板DID复现与稳健性诊断；不替代其他识别方法。'],['背景知识','先区分ATT、处理暴露、处理组、时点、FE和聚类；记录估计量与假设。'],['工作步骤','读取说明和数据→确认变量语义→生成外部契约→校验时序→复现基线→逐项运行→保存证据。'],['检查清单','唯一键、缺失、处理反转、同步采用、平衡面板、吸收项、处理前分组、少簇、全量重复。'],['边界条件','数据只读，缺失语义先询问；模拟不解释为现实因果证据；交错采用转用合适估计器。'],['验证方式','独立实现对照、哈希、全量随机结果、同种子重跑；计数和有限模拟分辨率同时报告。']],[3.0,13.3])
 h('3.2 Skill与裸Prompt对比',2)
 table(['维度','裸Prompt／原型','修订Skill'],[['检验','R2：300次、种子825200520','相同数据、模型、分配规则和种子'],['数值','0次超越，直接比例0/300','仍为0次；300个系数最大差0'],['解释','没有量化模拟分辨率，易被误读成p=0','加一平滑1/301=0.003322；单侧95%上界0.009936；限定为模拟诊断'],['可审计性','保留回归及种子','增加契约、吸收项、前后哈希和完整状态']],[2.2,6.5,7.6])
-p('差异的本质：把需重复提醒的验证条件写入程序和制度，不以更显著的数字证明Skill有效。裸Prompt已有完整随机分布，不虚构“原版什么都没有”的对照。')
+p('本轮将有限模拟的解释要求写入Skill和程序。裸Prompt已保存完整随机分布，修订后新增平滑比例和概率上界；回归结果保持一致。')
 h('3.3 一般适用性自检',2)
 p('迁移到重新生成的最低工资与就业合成面板时，重新确定地区、年份、对数就业、政策暴露及外生控制，改变采用时点和收益方向；Skill源码不改。80地区、8年、120次模拟完成；重复键、处理反转与交错采用均触发停止。通用的是检查制度，同步平衡面板辅助程序有明确适用范围，不能推广为任意DID都可自动运行。')
 page();h('四、我设计的Agent')
@@ -85,7 +88,7 @@ table(['要素','我的设计'],[['名称','eval-did-robustness'],['目标','把
 h('4.2 设计心得',2)
 p('最容易遗漏的是：Agent说明写了“缺失就停”，配套程序却未实际检查。初版报告已经包含主题解释，但输入门槛不足。第二轮不是重写一遍结论，而是用缺失与篡改样例验证停止行为，再修复缺口。')
 p('评估最有价值的部分是把三种现象分开：R5仍显著但精度不稳定；R7下降涉及动态平均对象改变；T3未获支持属于研究假说证据不足，不是程序失败。这些区别直接约束论文措辞。')
-p('实现说明：本次由Codex按照Agent文件完成语义评估，evaluate.py进行确定性校验和装配；未声称调用独立外部模型。通用Agent说明与课程项目适配脚本分开，迁移时需重新配置输入及主题内容。')
+p('实现方式：Codex按Agent说明解读结果，evaluate.py负责输入校验和报告生成。通用Agent说明与课程适配脚本分别保存，迁移时需重新配置输入并调整主题解释。')
 page();h('五、迭代反思')
 h('第一轮  Skill的有限模拟解释',2)
 p('观察问题：R2裸Prompt与Skill原型都得到tail_count=0、tail_rate=0。零次超越是计数事实，但不能推出尾部概率为零。原型虽保留全量抽样，未量化有限重复的不确定性。')
@@ -94,15 +97,15 @@ p('修订前输出：tail_count: 0；tail_rate: 0.0。')
 p('修订后输出：smoothed_tail_rate: 0.003322259；tail_probability_upper95: 0.009936082；status: complete。300个系数最大绝对差为0。')
 p('证据：4e57924（原型）→819ad98（修订）；output/iterations/skill_v1、output/skill_r2、output/skill_comparison.json。',True)
 h('第二轮  Agent的输入验证',2)
-p('观察问题：在临时副本删除事件文件、改基准、删短窗口规格、令p=1.2，初版校验仍接受；只有重复行被识别。六例含一个正常样本，初版仅2/6符合预期。这里没有捏造AI先前说过的话，证据是实际程序行为。')
+p('观察问题：在临时副本删除事件文件、改基准、删短窗口规格、令p=1.2，初版校验仍接受；只有重复行被识别。六例含一个正常样本，初版仅2/6符合预期。测试结果保存在agent_v1_tests.json，可逐项核对。')
 p('修订：增加必备输入与规格契约、有限数与概率范围、分项结果交叉核对、安慰剂重复校验及哈希检查。正常输入继续接受，五类错误全部停止。')
 p('修订前输出：missing_event_file → accepted: true；changed_baseline → accepted: true。')
 p('修订后输出：missing_event_file → STOP: missing required evidence；changed_baseline → STOP: source mismatch baseline。6/6符合预期。')
 p('证据：8b216e6（初版）→9049b5c（修订）；output/iterations/agent_v1_tests.json、agent_v2_tests.json。',True)
 h('迭代总结',2)
-p('需要改变的不是让AI说得更谨慎，而是让关键判断有可执行的依据。下一次研究应先定义估计对象和异常退出条件，再运行模型；保留不利结果、实际失败和版本差异，才能解释输出为何值得相信。仍需人工复核经济语义与研究假设，测试通过不是因果证明。')
+p('两轮修订分别补充了有限模拟解释和输入错误检查。后续研究应先明确估计对象、验证指标与停止条件，再运行模型。程序可以核对数字和文件，却不能替代对变量含义及识别假设的判断；不显著结果和失败记录也应保留。')
 page();h('六、Git与协作习惯')
-table(['问题','我的回答'],[['分支设置','main之外5个任务分支，分别对应稳健性、Skill、Agent、论文和迭代。每个任务先建分支，完成后合并。'],['diff审查','合并前审查差异和关键代码；修正课堂公式冗余项，T4改为显式基准交互，保留异常输出。日志的尾部空格属于编译器格式，另行处理。'],['commit规范','feat / fix / docs / chore / merge，说明动作与原因。代表提交：9049b5c，增加证据完整性校验并拒绝被破坏的输入。'],['Git的作用','把实际尝试、拒绝的输出、修复和最终证据对应到版本；已有历史来自本次工作，不复制同学历史，不补造旧日期。']],[3.0,13.3])
+table(['问题','我的回答'],[['分支设置','main之外5个任务分支，分别对应稳健性、Skill、Agent、论文和迭代。每个任务先建分支，完成后合并。'],['diff审查','合并前审查差异和关键代码；修正课堂公式冗余项，T4改为显式基准交互，保留异常输出。日志的尾部空格属于编译器格式，另行处理。'],['commit规范','feat / fix / docs / chore / merge，说明动作与原因。代表提交：9049b5c，增加证据完整性校验并拒绝被破坏的输入。'],['Git的作用','通过提交记录定位每次尝试、异常输出和修复，便于比较修改前后的结果并恢复旧版本。']],[3.0,13.3])
 h('Git历史文本快照',2)
 history=(ROOT/'output/git-history.txt').read_text() if (ROOT/'output/git-history.txt').exists() else subprocess.check_output(['git','log','--oneline','--graph','--all'],cwd=ROOT,text=True)
 for line in history.splitlines():
@@ -114,7 +117,7 @@ page();h('附录  提交物自查清单')
 table(['提交物','位置','状态'],[['完整Git仓库','did-homework/.git','已完成'],['识别目标','output/estimand.md','已完成'],['Prompt','prompts/robustness/','基准+12张'],['检验汇总','output/robustness_summary.md','已完成'],['全部结果','output/*.csv、*.png','已完成'],['Skill','.claude/skills/robustness-check/','已验证'],['Skill对照','audit-log.md、output/skill_comparison.json','已完成'],['Agent','.claude/agents/eval-did-robustness.md','已完成'],['综合评估','output/eval_robustness_report.md','已完成'],['论文与PDF','paper/main.tex、main.pdf','实际编译'],['AI使用记录','audit-log.md','已完成'],['两轮迭代','output/iteration_reflection.md','已完成'],['Git历史','output/git-history.txt','已完成'],['纸质材料','submission/纸质提交材料.docx及PDF','已生成'],['远程推送与链接','按GITHUB_UPLOAD.md操作','待本人完成']],[3.3,10.8,2.2])
 h('关键证据速查',2)
 p('复现：output/baseline_comparison.md。推断口径：diagnostics.json及all_results.csv。原始公式异常：output/iterations/baseline_original_script.csv。迁移：output/migration/README.md和negative_tests.json。文献核查：quality_reports/crossref_verified.json。')
-p('论文与纸质材料均保留合成数据边界。材料中没有虚构现实数据、参考文献、独立模型调用或GitHub地址；提交前需将本人真实仓库链接填入封面，确认内容后打印。')
+p('提交前需将实际GitHub仓库链接填入封面，核对电子文件与打印稿一致。论文结果适用于本次合成数据演示。')
 # Remove inherited template borders and theme font overrides; set explicit CJK runs.
 for element in doc.styles.element.xpath('.//w:pBdr'):
     element.getparent().remove(element)
