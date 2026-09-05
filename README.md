@@ -68,4 +68,4 @@ cd ..
 
 ## Git与提交状态
 
-main之外保留5个任务分支与合并记录。远程仓库已创建，地址为 https://github.com/LucasMoore-77/did-homework-denghongqi；封面链接已补齐，本人按GITHUB_UPLOAD.md推送完整历史后提交。不要只通过网页拖文件上传，那会丢失此次作业要求的分支与版本历史。
+main之外保留5个任务分支与合并记录。远程仓库已创建，地址为 https://github.com/LucasMoore-77/did-homework-denghongqi
