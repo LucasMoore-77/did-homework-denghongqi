@@ -66,8 +66,6 @@ cd ..
 
 课堂Stata CSV是预存参考，不是本次运行Stata。课堂原Python公式在当前环境下产生异常SE，修复吸收控制项后，两种Python实现与Stata一致，完整记录见baseline_comparison.md。T3没有运行任何Matlab；原课堂论文仅留存在source/，最终论文采用实证交互讨论。
 
-参考陈圣恩、刁绍华、饶如意材料的组织和反思深度；不复制其代码、回归结果、经历或Git历史。原模板重复了整套内容，本材料按其单套章节结构排版。
-
 ## Git与提交状态
 
 main之外保留5个任务分支与合并记录。远程仓库已创建，地址为 https://github.com/LucasMoore-77/did-homework-denghongqi；封面链接已补齐，本人按GITHUB_UPLOAD.md推送完整历史后提交。不要只通过网页拖文件上传，那会丢失此次作业要求的分支与版本历史。
